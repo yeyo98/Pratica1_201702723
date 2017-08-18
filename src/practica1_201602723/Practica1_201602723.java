@@ -19,8 +19,11 @@ public class Practica1_201602723 {
         // TODO code application logic here
         
         //INICIO DE VARIABLE
-        String aux;
-        int opciones;
+        String aux;                         //si ya no me sirve volverla a utilizar para el titulo
+        String nivel = null;
+        String jugar = null;
+        int opciones=0;
+        //int cant=0;
         String[][] tablero = null;
         String[][] trampa = null;
         
@@ -45,32 +48,63 @@ public class Practica1_201602723 {
         System.out.println("Ingrese Opcion");
         //FIN MENU
         
+        try{
         opciones = op.nextInt();
+        }catch(Exception e){
+            System.out.println("Eliga un valor correcto");
+        }
         
         //INICIO TAMAÑO DEL TABLERO
         switch(opciones){
             case 1: {
                 tablero=new String[4][4];
                 trampa=new String[4][4];
+                nivel= "Principiante";
                 break;
             }
             case 2: {
-                tablero=new String[4][4];
-                trampa=new String[4][4];
+                tablero=new String[6][6];
+                trampa=new String[6][6];
+                nivel= "Intermedio";
+                //cant=2;
                 break;
             }
             case 3: {
                 tablero=new String[8][8];
                 trampa=new String[8][8];
+                nivel= "Experto";
+                //cant=4;
                 break;
             }
         }//FIN TAMAÑO DEL TABLERO
         
             Llenado(tablero);
+            Random(trampa);
+            
+            System.out.print("        NIvel " +nivel +"       ");
             Mostrar(tablero);
             
-            Random(trampa);
+            System.out.println("");
+            System.out.println("");
+            System.out.println("Chivo");
+            
             Mostrar(trampa);
+            System.out.println("");
+            System.out.println("--------------------------------------------");
+            
+            System.out.println("    Voltear: v");
+            System.out.println("    Reinciar: R");
+            System.out.println("    Salir: S");
+            System.out.println("--------------------------------------------");
+            
+            Scanner po = new Scanner(System.in);
+            jugar = po.nextLine();
+            
+            switch(jugar){
+            
+            }
+            
+            
         
     }
     
@@ -95,38 +129,50 @@ public class Practica1_201602723 {
         }
     }//FIN METODO MOSTRAR
     
+    //METODO PARA LLENAR CON BOMBAS
     public static void Random(String[][] chivo){
         int cont=0;
+        int cant=0;
         
+        //INCREMENTO DE LAS BOMBAS
+        if(chivo.length==4){
+            cant=4;
+        }else if(chivo.length==6){
+            cant=8;
+        }else{
+            cant=12;
+        }
+        
+        //LLENANDO LA MATRIZ
         for(int i=0; i<chivo.length ;i++){
             for(int j=0; j<chivo.length ;j++){
                 chivo[i][j] = "[ ]";
                 }
          }
         
+        //IMPLEMENTACION DE LAS BOMBAS
         do{
-            
             int fila = (int)(Math.random()*10);
             int columna = (int)(Math.random()*10);
-            System.out.println(fila+" "+columna);
             
-            if(fila<=chivo.length && columna<=chivo.length){
+            if(fila<chivo.length && columna<chivo.length){
+                if(chivo[fila][columna] != " * "){
                 chivo[fila][columna]= " * ";
                 cont++;
+                }
             }
-        
-        }while(cont==4);
-    }
+        }while(cont!=cant);
+    }//FIN LLENADO DE BOMBAS
     
     
     //METODO MUESTRA
-    public static void Muestra(String[][] matrix){
+    /*public static void Rmostrar(String[][] matrix){
         for(int i=0; i<matrix.length ;i++){
             System.out.println();
             for(int j=0; j<matrix.length ;j++){
             System.out.print(matrix[i][j] +" ");
             }
         }
-    }
+    }*/
         
 }
