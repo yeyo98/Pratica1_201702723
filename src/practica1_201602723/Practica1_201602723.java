@@ -22,8 +22,9 @@ public class Practica1_201602723 {
         String aux;                         //si ya no me sirve volverla a utilizar para el titulo
         String nivel = null;
         String jugar = null;
-        int opciones=0;
-        //int cant=0;
+        String elegir = null;
+        int menu_principal=0;
+        int fila =0, columna=0;
         String[][] tablero = null;
         String[][] trampa = null;
         
@@ -49,13 +50,13 @@ public class Practica1_201602723 {
         //FIN MENU
         
         try{
-        opciones = op.nextInt();
+        menu_principal = op.nextInt();
         }catch(Exception e){
             System.out.println("Eliga un valor correcto");
         }
         
         //INICIO TAMAÑO DEL TABLERO
-        switch(opciones){
+        switch(menu_principal){
             case 1: {
                 tablero=new String[4][4];
                 trampa=new String[4][4];
@@ -92,7 +93,7 @@ public class Practica1_201602723 {
             System.out.println("");
             System.out.println("--------------------------------------------");
             
-            System.out.println("    Voltear: v");
+            System.out.println("    Voltear: V");
             System.out.println("    Reinciar: R");
             System.out.println("    Salir: S");
             System.out.println("--------------------------------------------");
@@ -101,8 +102,58 @@ public class Practica1_201602723 {
             jugar = po.nextLine();
             
             switch(jugar){
-            
-            }
+                case "V":{
+                    
+                    do{
+                    fila = 0;
+                    columna = 0;
+                    System.out.println("Ingrese fila y columna");
+                    Scanner el = new Scanner(System.in);
+                    elegir = el.nextLine();
+                    
+                    System.out.println(" ");
+                    System.out.println("Desea aceptar los datos ingresados");
+                    Scanner de = new Scanner(System.in);
+                    aux = de.nextLine();
+                    
+                    switch(aux){
+                     case "Y": {  
+                        fila = Integer.parseInt(elegir.substring(0,1));
+                        columna = Integer.parseInt(elegir.substring(2,3));
+                    
+                        if(fila>trampa.length || columna>trampa.length){
+                        System.out.println("ERROR, INGRESE COORDENADAS CORRECTAS");
+                        }else{
+                            Jugar(fila,columna,tablero,trampa);
+                        
+                        }
+                        
+                        
+                        break;
+                    }
+                    
+                     case "N":{
+                         Mostrar(tablero);
+                         Mostrar(trampa);
+                        break;
+                     }
+                  }//FIN SWITCH AUX
+                }while(fila>trampa.length || columna>trampa.length); 
+                    
+                break;
+                }//FIN SWTICH V
+                
+                case "r":{
+                
+                break;
+                }
+                
+                case "s":{
+                
+                break;
+                }
+                
+            }//FIN SWITCH JUGAR
             
             
         
@@ -174,5 +225,20 @@ public class Practica1_201602723 {
             }
         }
     }*/
+    
+    public static void Jugar(int fil, int col, String[][] tab1, String[][] tab2){
         
+        //if(fil<=tab1.length && col<=tab1.length){
+           if(tab1[fil-1][col-1] == "[X]" ){
+               if(tab2[fil-1][col-1] == " * "){
+                   System.out.println("perdio");
+               }
+           }else{
+               System.out.println("elija otra");
+           }
+            
+        
+    }
+    
+    
 }
