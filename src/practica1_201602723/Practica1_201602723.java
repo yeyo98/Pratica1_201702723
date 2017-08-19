@@ -19,11 +19,12 @@ public class Practica1_201602723 {
         // TODO code application logic here
         
         //INICIO DE VARIABLE
-        String aux;                         //si ya no me sirve volverla a utilizar para el titulo
-        String nivel = null;
-        String jugar = null;
-        String elegir = null;
-        int menu_principal=0;
+        String aux;                         
+        String nivel = null;    //SELECCIONAR NIVEL (SOLO NOMBRE)
+        String jugar = null;    //OPCIONES DEL JUEGO
+        String elegir = null;   //ESCOGER ALGUNA COORDENADA
+        String reinicio = null; //PARA PODER REINICIAR
+        int menu_principal=0;   //MENU PRINCIPAL  
         int fila =0, columna=0;
         String[][] tablero = null;
         String[][] trampa = null;
@@ -39,6 +40,7 @@ public class Practica1_201602723 {
         aux = op.nextLine();
         
         //INICIO MENU
+        do{
         System.out.println("----------------------------------");
         System.out.println("            BUSCAMINAS!!          ");
         System.out.println("        1. Principiante");
@@ -47,6 +49,8 @@ public class Practica1_201602723 {
         System.out.println("        4. Salir");
         System.out.println("");
         System.out.println("Ingrese Opcion");
+        jugar = null;
+        reinicio = null;
         //FIN MENU
         
         try{
@@ -77,11 +81,20 @@ public class Practica1_201602723 {
                 //cant=4;
                 break;
             }
+            case 4: {
+                jugar = "S";
+                reinicio = "R";
+                //menu_principal = 4;
+                
+                break;
+            }
         }//FIN TAMAÑO DEL TABLERO
         
+        while(reinicio != "R"){//do{
             Llenado(tablero);
             Random(trampa);
             
+        do{    
             System.out.print("        NIvel " +nivel +"       ");
             Mostrar(tablero);
             
@@ -124,7 +137,27 @@ public class Practica1_201602723 {
                         if(fila>trampa.length || columna>trampa.length){
                         System.out.println("ERROR, INGRESE COORDENADAS CORRECTAS");
                         }else{
+                            
                             Jugar(fila,columna,tablero,trampa);
+                            
+                            if(tablero[fila-1][columna-1] == " * "){
+                               System.out.println("Desea reiniciar el juego Y/N");
+                                jugar = po.nextLine();
+                                
+                                switch(jugar){
+                                    case "Y":{
+                                        jugar = "S";
+                                    break;
+                                    }
+                                    case "N":{
+                                        jugar = "S";
+                                        reinicio = "R";
+                                        menu_principal = 4;
+                                        
+                                    break;
+                                    }
+                                }
+                            }
                         
                         }
                         
@@ -138,25 +171,28 @@ public class Practica1_201602723 {
                         break;
                      }
                   }//FIN SWITCH AUX
-                }while(fila>trampa.length || columna>trampa.length); 
                     
+                }while(fila>trampa.length || columna>trampa.length); 
                 break;
                 }//FIN SWTICH V
                 
-                case "r":{
-                
+                case "R":{
+                    jugar = "S";
+                    
                 break;
                 }
                 
-                case "s":{
-                
+                case "S":{
+                    jugar = "S";
+                    reinicio = "R";
                 break;
                 }
                 
             }//FIN SWITCH JUGAR
+            }while(jugar != "S");//PARA SALIR
+         }//while(reinicio != "R");
             
-            
-        
+        }while(menu_principal != 4); //CICLO PARA EL MENU PRINCIPAL
     }
     
     //METODOS
@@ -216,29 +252,47 @@ public class Practica1_201602723 {
     }//FIN LLENADO DE BOMBAS
     
     
-    //METODO MUESTRA
-    /*public static void Rmostrar(String[][] matrix){
-        for(int i=0; i<matrix.length ;i++){
-            System.out.println();
-            for(int j=0; j<matrix.length ;j++){
-            System.out.print(matrix[i][j] +" ");
-            }
-        }
-    }*/
-    
+    //METODO PARA JUGAR
     public static void Jugar(int fil, int col, String[][] tab1, String[][] tab2){
         
-        //if(fil<=tab1.length && col<=tab1.length){
+        //int cont=0;
+        
            if(tab1[fil-1][col-1] == "[X]" ){
                if(tab2[fil-1][col-1] == " * "){
-                   System.out.println("perdio");
+                   tab1[fil-1][col-1] = " * ";
+                   
+                   Mostrar(tab1);
+                   System.out.println(" ");
+                   System.out.println(" ");
+                   System.out.println("PERDIO :'( - WASTED!!!");
+                   
+               }else{
+                   Num_bombas(fil, col, tab1, tab2);
+               
                }
            }else{
-               System.out.println("elija otra");
+               System.out.println("ELIJA OTRA POSICION QUE NO HAYA SIDO VOLTEADA");
+               System.out.println(" ");
            }
-            
-        
-    }
+    }//FIN METODO PARA JUGAR
+    
+    //METODO PARA CANT. BOMBAS
+    public static void Num_bombas(int fil, int col, String[][] tab1, String[][] tab2){
+        int cont=0; 
+            for(int i=1; i>-2;i--){   //1,0,-1
+               for(int j=1; j>-2 ;j--){
+                  if( (fil-1-i)>=0 && (col-1-j>=0) && fil<=tab2.length && col<=tab2.length ){
+                    try{ 
+                    if(tab2[fil-1-i][col-1-j] == " * "){
+                         cont++;
+                     }
+                    }catch(Exception e){
+                     }
+                  }
+               }
+            }
+             tab1[fil-1][col-1] = "["+cont+"]";
+     }//FIN METODO PARA CANT. BOMBAS
     
     
 }
