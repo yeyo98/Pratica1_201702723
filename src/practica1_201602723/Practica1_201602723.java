@@ -278,8 +278,10 @@ public class Practica1_201602723 {
     
     //METODO PARA CANT. BOMBAS
     public static void Num_bombas(int fil, int col, String[][] tab1, String[][] tab2){
-        int cont=0; 
-            for(int i=1; i>-2;i--){   //1,0,-1
+        int cont=0, cont1=0; 
+        
+        
+        /*for(int i=1; i>-2;i--){   //1,0,-1
                for(int j=1; j>-2 ;j--){
                   if( (fil-1-i)>=0 && (col-1-j>=0) && fil<=tab2.length && col<=tab2.length ){
                     try{ 
@@ -291,7 +293,30 @@ public class Practica1_201602723 {
                   }
                }
             }
-             tab1[fil-1][col-1] = "["+cont+"]";
+            tab1[fil-1][col-1] = "["+cont+"]"; //POSICION SELECCIONADA*/
+        
+        for(int filas=2;  ;filas--){
+            for(int columnas=2;  ;columnas--){
+        if(tab1[fil-2][col-2] != " * ")  
+        cont=0;    
+        for(int i=1; i>-2;i--){   //1,0,-1
+               for(int j=1; j>-2 ;j--){
+                  if( (fil-2-i)>=0 && (col-2-j>=0) && fil<=tab2.length && col<=tab2.length ){
+                    try{ 
+                    if(tab2[fil-2-i][col-2-j] == " * "){
+                         cont++;
+                     }
+                    }catch(Exception e){
+                     }
+                  }
+               }
+            }
+            tab1[fil-2][col-2] = "["+cont+"]"; //POSICION SELECCIONADA
+            }
+        }
+            
+            
+            
      }//FIN METODO PARA CANT. BOMBAS
     
     
