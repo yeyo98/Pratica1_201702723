@@ -295,29 +295,38 @@ public class Practica1_201602723 {
             }
             tab1[fil-1][col-1] = "["+cont+"]"; //POSICION SELECCIONADA*/
         
-        for(int filas=2;  ;filas--){
-            for(int columnas=2;  ;columnas--){
-        if(tab1[fil-2][col-2] != " * ")  
-        cont=0;    
-        for(int i=1; i>-2;i--){   //1,0,-1
-               for(int j=1; j>-2 ;j--){
-                  if( (fil-2-i)>=0 && (col-2-j>=0) && fil<=tab2.length && col<=tab2.length ){
+        for(int filas=2; filas>-1 ;filas--){        //2,1,0
+            for(int columnas=2; columnas>-1 ;columnas--){
+        
+            try
+            {   
+            if(tab2[fil-filas][col-columnas] == " * "){  
+            
+            }else{
+                cont=0;    
+                for(int i=1; i>-2;i--){   //1,0,-1
+                    for(int j=1; j>-2 ;j--){
+                  if( (fil-filas-i)>=0 && (col-columnas-j>=0) && fil<=tab2.length && col<=tab2.length ){
                     try{ 
-                    if(tab2[fil-2-i][col-2-j] == " * "){
+                    if(tab2[fil-filas-i][col-columnas-j] == " * "){
                          cont++;
                      }
                     }catch(Exception e){
                      }
                   }
-               }
-            }
-            tab1[fil-2][col-2] = "["+cont+"]"; //POSICION SELECCIONADA
-            }
-        }
+               }//SEGUNDO FOR
+             }//PRIMER FOR
+                tab1[fil-filas][col-columnas] = " "+cont+" "; //POSICION SELECCIONADA
+             }//ELSE
+            }catch(Exception e){
+                     }
+        
+           }//SEGUNDO GRAN FOR
+        }//PRIMER GRAN FOR
             
             
             
      }//FIN METODO PARA CANT. BOMBAS
     
     
-}
+}//FIN PROGRAMA
