@@ -26,6 +26,7 @@ public class Practica1_201602723 {
         String reinicio = null; //PARA PODER REINICIAR
         int menu_principal=0;   //MENU PRINCIPAL  
         int fila =0, columna=0;
+        int cont_ganar = 0, minas = 0;
         String[][] tablero = null;
         String[][] trampa = null;
         
@@ -91,10 +92,24 @@ public class Practica1_201602723 {
         }//FIN TAMAÑO DEL TABLERO
         
         while(reinicio != "R"){//do{
+            //REINICIO DE VARIABLES
             Llenado(tablero);
             Random(trampa);
+            //cont_ganar = 0;
+            jugar = null;
+            //FIN REINICIO DE VARIABLES
             
-        do{    
+            if(tablero.length==4){
+                minas=4;
+            }else if(tablero.length==6){
+                minas=8;
+            }else{
+                minas=12;
+            }
+            
+            
+            
+        do{  
             System.out.print("        NIvel " +nivel +"       ");
             Mostrar(tablero);
             
@@ -157,9 +172,32 @@ public class Practica1_201602723 {
                                     break;
                                     }
                                 }
-                            }
-                        
-                        }
+                            }else{
+                                //TRABAJAR AQUI
+                                Ganar(tablero);
+                                cont_ganar++;
+                                
+                                if(cont_ganar==minas){
+                                System.out.println("Desea seguir jugando Y/N");
+                                jugar = po.nextLine();
+                                
+                                switch(jugar){
+                                    case "Y":{
+                                        jugar = "S";
+                                        reinicio = "R";
+                                    break;
+                                    }
+                                    case "N":{
+                                        jugar = "S";
+                                        reinicio = "R";
+                                        menu_principal = 4;
+                                        
+                                    break;
+                                    }
+                                }
+                               }  
+                            }//ELSE
+                        }//FIN IF/ELSE
                         
                         
                         break;
@@ -174,7 +212,7 @@ public class Practica1_201602723 {
                     
                 }while(fila>trampa.length || columna>trampa.length); 
                 break;
-                }//FIN SWTICH V
+                }//FIN SWTICH "V"
                 
                 case "R":{
                     jugar = "S";
@@ -264,7 +302,7 @@ public class Practica1_201602723 {
                    Mostrar(tab1);
                    System.out.println(" ");
                    System.out.println(" ");
-                   System.out.println("PERDIO :'( - WASTED!!!");
+                   System.out.println("BOOM!!  PERDIO :'( - WASTED!!!");
                    
                }else{
                    Num_bombas(fil, col, tab1, tab2);
@@ -278,22 +316,7 @@ public class Practica1_201602723 {
     
     //METODO PARA CANT. BOMBAS
     public static void Num_bombas(int fil, int col, String[][] tab1, String[][] tab2){
-        int cont=0, cont1=0; 
-        
-        
-        /*for(int i=1; i>-2;i--){   //1,0,-1
-               for(int j=1; j>-2 ;j--){
-                  if( (fil-1-i)>=0 && (col-1-j>=0) && fil<=tab2.length && col<=tab2.length ){
-                    try{ 
-                    if(tab2[fil-1-i][col-1-j] == " * "){
-                         cont++;
-                     }
-                    }catch(Exception e){
-                     }
-                  }
-               }
-            }
-            tab1[fil-1][col-1] = "["+cont+"]"; //POSICION SELECCIONADA*/
+        int cont=0;
         
         for(int filas=2; filas>-1 ;filas--){        //2,1,0
             for(int columnas=2; columnas>-1 ;columnas--){
@@ -323,10 +346,34 @@ public class Practica1_201602723 {
         
            }//SEGUNDO GRAN FOR
         }//PRIMER GRAN FOR
-            
-            
-            
      }//FIN METODO PARA CANT. BOMBAS
+    
+    //METODO PARA GANAR
+    public static void Ganar(String[][] juego){
+        int cant=0, cont=0;
+        
+        if(juego.length==4){
+            cant=4;
+        }else if(juego.length==6){
+            cant=8;
+        }else{
+            cant=12;
+        }
+        
+        for(int i=0; i<juego.length;i++){
+            for(int j=0; j<juego.length;j++){
+                if(juego[i][j] == "[X]"){
+                    cont++;
+                }
+            }
+        }
+        
+        if(cont==cant){
+            System.out.println("FELICIDADES!! GANO :D");
+        }
+        
+        
+    }//FIN METODO PARA GANAR
     
     
 }//FIN PROGRAMA
