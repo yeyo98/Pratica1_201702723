@@ -42,6 +42,8 @@ public class Practica1_201602723 {
         
         //INICIO MENU
         do{
+        menu_principal = 0;
+        
         System.out.println("----------------------------------");
         System.out.println("            BUSCAMINAS!!          ");
         System.out.println("        1. Principiante");
@@ -53,12 +55,14 @@ public class Practica1_201602723 {
         jugar = null;
         reinicio = null;
         //FIN MENU
-        
+
         try{
         menu_principal = op.nextInt();
         }catch(Exception e){
-            System.out.println("Eliga un valor correcto");
+            System.out.println("Eliga un valor correcto");              //  QUITAR EL DO/WHILE
         }
+        
+        
         
         //INICIO TAMAÑO DEL TABLERO
         switch(menu_principal){
@@ -78,7 +82,7 @@ public class Practica1_201602723 {
             case 3: {
                 tablero=new String[8][8];
                 trampa=new String[8][8];
-                nivel= "Experto";
+                nivel= "Leyenda";
                 //cant=4;
                 break;
             }
@@ -110,6 +114,8 @@ public class Practica1_201602723 {
             
             
         do{  
+            cont_ganar = 0; //PARA LIMPIAR EL CONTADOR DE GANAR
+            
             System.out.print("        NIvel " +nivel +"       ");
             Mostrar(tablero);
             
@@ -127,7 +133,9 @@ public class Practica1_201602723 {
             System.out.println("--------------------------------------------");
             
             Scanner po = new Scanner(System.in);
+            
             jugar = po.nextLine();
+            
             
             switch(jugar){
                 case "V":{
@@ -175,7 +183,22 @@ public class Practica1_201602723 {
                             }else{
                                 //TRABAJAR AQUI
                                 Ganar(tablero);
-                                cont_ganar++;
+                                
+                                for(int i=0; i<tablero.length;i++){
+                                    for(int j=0; j<tablero.length;j++){
+                                        if(tablero[i][j] == "[X]"){
+                                            cont_ganar++;
+                                        }
+                                    }
+                                }
+        
+                            /*if(cont==cant){
+                                    System.out.println("FELICIDADES!! GANO :D");
+                            }*/
+                                
+                                
+                                
+                                //cont_ganar++;
                                 
                                 if(cont_ganar==minas){
                                 System.out.println("Desea seguir jugando Y/N");
@@ -299,6 +322,8 @@ public class Practica1_201602723 {
                if(tab2[fil-1][col-1] == " * "){
                    tab1[fil-1][col-1] = " * ";
                    
+                   System.out.println("Solucion");
+                   Solucion(tab1, tab2);
                    Mostrar(tab1);
                    System.out.println(" ");
                    System.out.println(" ");
@@ -375,5 +400,47 @@ public class Practica1_201602723 {
         
     }//FIN METODO PARA GANAR
     
+   public static void Solucion(String[][] tab1, String[][] tab2){
+        int cont=0;
+        //int fil=2;
+        //int col=2;
+        
+        for(int fil=1; fil<=tab2.length ;fil++){
+                    for(int col=1; col<=tab2.length ;col++){
+        
+        for(int filas=2; filas>-1 ;filas--){        //2,1,0
+            for(int columnas=2; columnas>-1 ;columnas--){
+        
+            
+            try
+            {   
+            if(tab2[fil-filas][col-columnas] == " * "){  
+            
+            }else{
+                cont=0;    
+                
+                
+                for(int i=1; i>-2;i--){   //1,0,-1
+                    for(int j=1; j>-2 ;j--){
+                  if( (fil-filas-i)>=0 && (col-columnas-j>=0) && fil<=tab2.length && col<=tab2.length ){
+                    try{ 
+                    if(tab2[fil-filas-i][col-columnas-j] == " * "){
+                         cont++;
+                     }
+                    }catch(Exception e){
+                     }
+                  }
+               }//SEGUNDO FOR
+             }//PRIMER FOR
+                tab1[fil-filas][col-columnas] = " "+cont+" "; //POSICION SELECCIONADA
+             }//ELSE
+            }catch(Exception e){
+                     }
+                }
+            }
+           }//SEGUNDO GRAN FOR
+        }//PRIMER GRAN FOR
+        
+     }//FIN METODO PARA CANT. BOMBAS
     
 }//FIN PROGRAMA
